@@ -612,6 +612,7 @@ let gitHubRelease () =
     client.DefaultRequestHeaders.Authorization <- AuthenticationHeaderValue ("Bearer", pat)
     let postData = JsonSerializer.Serialize releaseSpec
     use content = new StringContent (postData, Encoding.UTF8, "application/json")
+    printfn $"https://api.github.com/repos/%s{gitOwner}/%s{gitName}/releases"
     use response = client.PostAsync($"https://api.github.com/repos/%s{gitOwner}/%s{gitName}/releases", content).Result.EnsureSuccessStatusCode()
     let response = response.Content.ReadAsStringAsync().Result
     let output = JsonSerializer.Deserialize<GitHubReleaseResponse> response
