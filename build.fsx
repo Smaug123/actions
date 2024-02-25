@@ -591,7 +591,7 @@ let gitHubRelease () =
         runProcessWithOutput Map.empty "git" ["symbolic-ref" ; "--short" ; "HEAD"]
     Console.WriteLine $"Branch: '%s{gitBranch}'; remote: '%s{remote}'"
     runProcess "git" ["push" ; remote ; gitBranch]
-    runProcess "git" ["tag" ; releaseNotes.NugetVersion]
+    runProcess "git" ["tag" ; "-f" ; releaseNotes.NugetVersion]
     runProcess "git" ["push" ; remote ; releaseNotes.NugetVersion]
 
     Console.WriteLine "Creating GitHub release... "
