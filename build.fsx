@@ -611,6 +611,7 @@ let gitHubRelease () =
     message.Headers.Add ("Accept", "application/vnd.github+json")
     message.Headers.Add ("X-GitHub-Api-Version", "2022-11-28")
     message.Headers.Add ("Authorization", $"Bearer %s{pat}")
+    message.Headers.Add ("User-Agent", "build-fsx-release")
     let postData = JsonSerializer.Serialize releaseSpec
     use content = new StringContent (postData, Encoding.UTF8, "application/json")
     message.Content <- content
