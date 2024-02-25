@@ -616,6 +616,7 @@ let gitHubRelease () =
     message.Content <- content
     use response = client.SendAsync(message).Result
     let response = response.Content.ReadAsStringAsync().Result
+    printfn "%s" response
     let output = JsonSerializer.Deserialize<GitHubReleaseResponse> response
 
     Console.WriteLine $"GitHub response: %+A{output}"
