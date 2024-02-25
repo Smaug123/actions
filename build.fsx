@@ -486,7 +486,7 @@ let releaseDocs (_ : HaveGeneratedDocs) =
     copyDir (DirectoryInfo "output") tempDocsDir true
 
     runProcess "git" ["-C" ; tempDocsDir.FullName ; "add" ; "--all"]
-    runProcess "git" ["-C" ; tempDocsDir.FullName ; "commit" ; "--all" ; "--message" ; $"Update generated documentation for version %s{buildVersion}"]
+    runProcess "git" ["-C" ; tempDocsDir.FullName ; "commit" ; "--all" ; "--allow-empty-commit" ; "--message" ; $"Update generated documentation for version %s{buildVersion}"]
     runProcess "git" ["-C" ; tempDocsDir.FullName ; "push"]
     Console.WriteLine "done."
 
@@ -586,7 +586,7 @@ let gitHubRelease () =
                 |> String.concat " "
             failwith $"Multiple matching push remotes found for %s{gitOwner}/%s{gitName}: %s{remotes}"
 
-    runProcess "git" ["commit" ; "--all" ; "--message" ; $"Bump version to %s{releaseNotes.NugetVersion}"]
+    runProcess "git" ["commit" ; "--all" ; "--allow-empty" ; "--message" ; $"Bump version to %s{releaseNotes.NugetVersion}"]
     let gitBranch =
         runProcessWithOutput Map.empty "git" ["symbolic-ref" ; "--short" ; "HEAD"]
     Console.WriteLine $"Branch: '%s{gitBranch}'; remote: '%s{remote}'"
